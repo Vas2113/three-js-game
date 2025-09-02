@@ -20,16 +20,16 @@ export const usePlayer = () => {
   });
 
   const setMovementStatus = (code, status) => {
-    setMovement((m) => ({ ...m, [code]: status }));
+    setMovement((move) => ({ ...move, [code]: status }));
   };
 
   useEffect(() => {
-    const handleKeyDown = (ev) => {
-      setMovementStatus(moveFieldByKey(ev.code), true);
+    const handleKeyDown = (event) => {
+      setMovementStatus(moveFieldByKey(event.code), true);
     };
 
-    const handleKeyUp = (ev) => {
-      setMovementStatus(moveFieldByKey(ev.code), false);
+    const handleKeyUp = (event) => {
+      setMovementStatus(moveFieldByKey(event.code), false);
     };
 
     document.addEventListener('keydown', handleKeyDown);
