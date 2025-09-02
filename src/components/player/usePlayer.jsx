@@ -1,16 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 export const usePlayer = () => {
-  const [movement, setMovement] = useState({
-    forward: false,
-    backward: false,
-    left: false,
-    right: false,
-    jump: false,
-  });
-
   const keys = {
-    keyW: 'forward',
+    KeyW: 'forward',
     KeyS: 'backward',
     KeyA: 'left',
     KeyD: 'right',
@@ -19,17 +11,25 @@ export const usePlayer = () => {
 
   const moveFieldByKey = (key) => keys[key];
 
+  const [movement, setMovement] = useState({
+    forward: false,
+    backward: false,
+    left: false,
+    right: false,
+    jump: false,
+  });
+
   const setMovementStatus = (code, status) => {
-    setMovement((move) => ({ ...move, [code]: status }));
+    setMovement((m) => ({ ...m, [code]: status }));
   };
 
   useEffect(() => {
-    const handleKeyDown = (event) => {
-      setMovementStatus(moveFieldByKey(event.code), true);
+    const handleKeyDown = (ev) => {
+      setMovementStatus(moveFieldByKey(ev.code), true);
     };
 
-    const handleKeyUp = (event) => {
-      setMovementStatus(moveFieldByKey(event.code), false);
+    const handleKeyUp = (ev) => {
+      setMovementStatus(moveFieldByKey(ev.code), false);
     };
 
     document.addEventListener('keydown', handleKeyDown);
