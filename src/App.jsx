@@ -1,5 +1,7 @@
 import { PointerLockControls, Sky } from '@react-three/drei';
-import { Ground } from './components/Ground';
+import Ground from './components/ground/Ground';
+import { Physics, RigidBody } from '@react-three/rapier';
+import Player from './components/Player/Player';
 
 const App = () => {
   return (
@@ -7,7 +9,15 @@ const App = () => {
       <PointerLockControls />
       <Sky sunPosition={[100, 20, 100]} />
       <ambientLight intensity={1.5} />
-      <Ground />
+      <Physics gravity={[0, -20, 0]}>
+        <Ground />
+        <Player />
+        <RigidBody>
+          <mesh position={[0, 3, -5]}>
+            <boxGeometry />
+          </mesh>
+        </RigidBody>
+      </Physics>
     </>
   );
 };
