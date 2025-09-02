@@ -1,3 +1,6 @@
+// import * as THREE
+
+
 export const Ground = () => {
   return (
     <mesh
