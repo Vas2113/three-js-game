@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import * as RAPIER from '@dimforge/rapier3d-compat';
-import { RigidBody, useRapier } from '@react-three/rapier';
+import { CapsuleCollider, RigidBody, useRapier } from '@react-three/rapier';
 import { useRef } from 'react';
 import { usePlayer } from './usePlayer';
 import { useFrame } from '@react-three/fiber';
@@ -41,7 +41,7 @@ const Player = () => {
     const ray = world.castRay(
       new RAPIER.Ray(playerRef.current.translation(), { x: 0, y: -1, z: 0 })
     );
-    const grounded = ray && ray.collider && Math.abs(ray.toi) <= 1;
+    const grounded = ray && ray.collider && Math.abs(ray.toi) <= 1.5;
 
     if (jump && grounded) doJump();
   });
@@ -59,6 +59,7 @@ const Player = () => {
         lockRotations>
         <mesh>
           <capsuleGeometry args={[0.5, 0.5]} />
+          <CapsuleCollider args={[0.75, 0.5]} />
         </mesh>
       </RigidBody>
     </>

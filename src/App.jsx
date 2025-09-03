@@ -1,9 +1,10 @@
 import { PointerLockControls, Sky } from '@react-three/drei';
-import Ground from './components/ground/Ground';
-import { Physics, RigidBody } from '@react-three/rapier';
-import Player from './components/Player/Player';
+import Ground from './components/ground/Ground.jsx';
+import { Physics } from '@react-three/rapier';
+import Player from './components/Player/Player.jsx';
+import { Cubes } from './components/cubes/Cubes.jsx';
 
-const App = () => {
+export const App = () => {
   return (
     <>
       <PointerLockControls />
@@ -12,11 +13,7 @@ const App = () => {
       <Physics gravity={[0, -20, 0]}>
         <Ground />
         <Player />
-        <RigidBody>
-          <mesh position={[0, 3, -5]}>
-            <boxGeometry />
-          </mesh>
-        </RigidBody>
+        <Cubes />
       </Physics>
     </>
   );
