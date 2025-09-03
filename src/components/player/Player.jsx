@@ -27,7 +27,8 @@ const Player = () => {
     direction
       .subVectors(frontVector, sideVector)
       .normalize()
-      .multiplyScalar(MOVE_SPEED);
+      .multiplyScalar(MOVE_SPEED)
+      .applyEuler(state.camera.rotation);
 
     playerRef.current.wakeUp();
     playerRef.current.setLinvel({

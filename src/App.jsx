@@ -1,8 +1,9 @@
 import { PointerLockControls, Sky } from '@react-three/drei';
-import Ground from './components/ground/Ground.jsx';
+import Ground from '@/components/ground/Ground.jsx';
 import { Physics } from '@react-three/rapier';
-import Player from './components/Player/Player.jsx';
-import { Cubes } from './components/cubes/Cubes.jsx';
+import Player from '@/components/Player/Player.jsx';
+import { Cubes } from '@/components/cubes/Cubes.jsx';
+import { WeaponModel } from '@/components/weaponModel/WeaponModel.jsx';
 
 export const App = () => {
   return (
@@ -16,6 +17,9 @@ export const App = () => {
         <Player />
         <Cubes />
       </Physics>
+      <group position={[0, 3, 0]}>
+        <WeaponModel />
+      </group>
     </>
   );
 };
