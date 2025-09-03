@@ -1,5 +1,5 @@
 import { RigidBody } from '@react-three/rapier';
-import cubes from '../../constants/cubes.json';
+import cubes from '@/constants/cubes.json';
 
 export const Cubes = () => {
   return cubes.map((coords, index) => (
@@ -14,7 +14,7 @@ const Cube = (props) => {
   return (
     <RigidBody {...props}>
       <mesh>
-        <meshStandardMaterial color="red" />
+        <meshStandardMaterial color="white" />
         <boxGeometry />
       </mesh>
     </RigidBody>
