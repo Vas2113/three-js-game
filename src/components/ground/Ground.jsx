@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { useTexture } from '@react-three/drei';
-import floorTexture from '@/assets/react.svg';
+// import floorTexture from '@/assets/react.svg';
+import floorTexture from '@/assets/desert.jpg';
 import { CuboidCollider, RigidBody } from '@react-three/rapier';
 
 const Ground = () => {
