@@ -83,7 +83,7 @@ const Player = () => {
   const initSwayingObjectAnimation = () => {
     const currentPosition = new THREE.Vector3(0, 0, 0);
     const initialPosition = new THREE.Vector3(0, 0, 0);
-    const newPosition = new THREE.Vector3(0, 0, 0);
+    const newPosition = new THREE.Vector3(-0.05, 0, 0);
 
     const animationDuration = 300;
     const easing = Easing.Quadratic.Out;
