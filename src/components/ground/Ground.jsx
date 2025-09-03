@@ -30,5 +30,4 @@ const Ground = () => {
     </RigidBody>
   );
 };
-
 export default Ground;
