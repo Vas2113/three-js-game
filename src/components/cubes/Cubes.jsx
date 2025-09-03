@@ -16,8 +16,8 @@ const Cube = (props) => {
       <mesh
         castShadow
         receiveShadow>
-        <meshStandardMaterial color="orange" />
-        <boxGeometry args={[2, 2, 2]} />
+        <meshStandardMaterial color="white" />
+        <boxGeometry />
       </mesh>
     </RigidBody>
   );

@@ -4,6 +4,7 @@ import { CapsuleCollider, RigidBody, useRapier } from '@react-three/rapier';
 import { useRef } from 'react';
 import { usePlayer } from './usePlayer';
 import { useFrame } from '@react-three/fiber';
+import { WeaponModel } from '../weaponModel/WeaponModel';
 
 const MOVE_SPEED = 5;
 const direction = new THREE.Vector3();
@@ -43,8 +44,9 @@ const Player = () => {
       new RAPIER.Ray(playerRef.current.translation(), { x: 0, y: -1, z: 0 })
     );
     const grounded = ray && ray.collider && Math.abs(ray.toi) <= 1.5;
-
-    if (jump && grounded) doJump();
+    console.log(jump, grounded);
+    // if (jump && grounded) doJump();
+    if (jump) doJump();
 
     const { x, y, z } = playerRef.current.translation();
     state.camera.position.set(x, y, z);

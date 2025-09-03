@@ -11,6 +11,10 @@ export const App = () => {
       <PointerLockControls />
       <Sky sunPosition={[100, 20, 100]} />
       <ambientLight intensity={1.5} />
+      <directionalLight
+        castShadow
+        intensity={0.8}
+      />
       <Physics gravity={[0, -20, 0]}>
         <Ground />
         <Player />
