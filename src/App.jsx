@@ -1,13 +1,19 @@
+import { Group } from '@tweenjs/tween.js';
 import { PointerLockControls, Sky } from '@react-three/drei';
 import Ground from '@/components/ground/Ground.jsx';
 import { Physics } from '@react-three/rapier';
 import Player from '@/components/Player/Player.jsx';
 import { Cubes } from '@/components/cubes/Cubes.jsx';
-import { WeaponModel } from '@/components/weaponModel/WeaponModel.jsx';
+import { useFrame } from '@react-three/fiber';
 
 const shadowOffset = 50;
+const tweenGroup = new Group();
 
 export const App = () => {
+  useFrame(() => {
+    tweenGroup.update();
+  });
+
   return (
     <>
       <PointerLockControls />
@@ -28,9 +34,6 @@ export const App = () => {
         <Player />
         <Cubes />
       </Physics>
-      <group position={[3, 1, -2]}>
-        <WeaponModel />
-      </group>
     </>
   );
 };

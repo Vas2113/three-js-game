@@ -1,7 +1,8 @@
 import * as THREE from 'three';
 import * as RAPIER from '@dimforge/rapier3d-compat';
+import { Group, Easing, Tween } from '@tweenjs/tween.js';
 import { CapsuleCollider, RigidBody, useRapier } from '@react-three/rapier';
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { usePlayer } from './usePlayer';
 import { useFrame } from '@react-three/fiber';
 import { Weapon } from '@/components/weapon/Weapon.jsx';
@@ -11,11 +12,20 @@ const direction = new THREE.Vector3();
 const frontVector = new THREE.Vector3();
 const sideVector = new THREE.Vector3();
 const rotation = new THREE.Vector3();
+const tweenGroup = new Group();
 
 const Player = () => {
   const playerRef = useRef();
-  const { forward, backward, left, right, jump } = usePlayer();
+  const swayingObjectRef = useRef();
   const objectInHandRef = useRef();
+
+  const [swayingAnimation, setSwayingAnimation] = useState(null);
+  const [swayingBackAnimation, setSwayingBackAnimation] = useState(null);
+  const [isSwayingAnimationFinished, setIsSwayingAnimationFinished] =
+    useState(true);
+  const [isMoving, setIsMoving] = useState(false);
+
+  const { forward, backward, left, right, jump } = usePlayer();
 
   const rapier = useRapier();
 
@@ -55,11 +65,53 @@ const Player = () => {
     objectInHandRef.current.position
       .copy(state.camera.position)
       .add(state.camera.getWorldDirection(rotation));
+
+    const isMoving = direction.length() > 0;
+
+    if (isMoving && isSwayingAnimationFinished) {
+      setIsSwayingAnimationFinished(false);
+      swayingAnimation.start();
+    }
+
+    tweenGroup.update();
   });
 
   const doJump = () => {
     playerRef.current.setLinvel({ x: 0, y: 8, z: 0 });
   };
+
+  const initSwayingObjectAnimation = () => {
+    const currentPosition = new THREE.Vector3(0, 0, 0);
+    const initialPosition = new THREE.Vector3(0, 0, 0);
+    const newPosition = new THREE.Vector3(0, 0, 0);
+
+    const animationDuration = 300;
+    const easing = Easing.Quadratic.Out;
+
+    const twSwayingAnimation = new Tween(currentPosition, tweenGroup)
+      .to(newPosition, animationDuration)
+      .easing(easing)
+      .onUpdate(() => {
+        swayingObjectRef.current.position.copy(currentPosition);
+      });
+
+    const twSwayingBackAnimation = new Tween(currentPosition, tweenGroup)
+      .to(initialPosition, animationDuration)
+      .easing(easing)
+      .onUpdate(() => {
+        swayingObjectRef.current.position.copy(currentPosition);
+      })
+      .onComplete(() => setIsSwayingAnimationFinished(true));
+
+    twSwayingAnimation.chain(twSwayingBackAnimation);
+
+    setSwayingAnimation(twSwayingAnimation);
+    setSwayingBackAnimation(twSwayingBackAnimation);
+  };
+
+  useEffect(() => {
+    initSwayingObjectAnimation();
+  }, []);
 
   return (
     <>
@@ -74,10 +126,12 @@ const Player = () => {
         </mesh>
       </RigidBody>
       <group ref={objectInHandRef}>
-        <Weapon
-          position={[0.3, -0.1, 0.3]}
-          scale={0.3}
-        />
+        <group ref={swayingObjectRef}>
+          <Weapon
+            position={[0.3, -0.1, 0.3]}
+            scale={0.3}
+          />
+        </group>
       </group>
     </>
   );
