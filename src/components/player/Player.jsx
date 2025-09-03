@@ -45,6 +45,9 @@ const Player = () => {
     const grounded = ray && ray.collider && Math.abs(ray.toi) <= 1.5;
 
     if (jump && grounded) doJump();
+
+    const { x, y, z } = playerRef.current.translation();
+    state.camera.position.set(x, y, z);
   });
 
   const doJump = () => {
